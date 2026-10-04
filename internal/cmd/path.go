@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/sylophi/terrier/internal/store"
+	"github.com/dittofleet/terrier/internal/store"
 )
 
 const pathUsage = "usage: terrier path [<project>] [--json]"

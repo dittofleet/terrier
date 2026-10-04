@@ -8,9 +8,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/sylophi/terrier/internal/release"
-	"github.com/sylophi/terrier/internal/store"
-	"github.com/sylophi/terrier/internal/xdg"
+	"github.com/dittofleet/terrier/internal/release"
+	"github.com/dittofleet/terrier/internal/store"
+	"github.com/dittofleet/terrier/internal/xdg"
 )
 
 const uninstallUsage = "usage: terrier uninstall [--yes]"

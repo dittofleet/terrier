@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/sylophi/terrier/internal/git"
-	"github.com/sylophi/terrier/internal/store"
+	"github.com/dittofleet/terrier/internal/git"
+	"github.com/dittofleet/terrier/internal/store"
 )
 
 // Project is the record terrier reports. Only Path comes from the

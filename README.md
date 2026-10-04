@@ -79,7 +79,7 @@ runtime, so this is one line, and it is safe to run when terrier is already
 there:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/sylophi/terrier/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/dittofleet/terrier/main/install.sh | sh
 ```
 
 **Update it when you update.** Run the same line from your tool's update path.
@@ -118,7 +118,7 @@ Run `terrier help` for the flags.
 ## Install
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/sylophi/terrier/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/dittofleet/terrier/main/install.sh | sh
 ```
 
 Installs the latest release to `~/.local/bin/terrier`, with `ter` alongside it
@@ -133,7 +133,11 @@ command.
 
 `skills/terrier/SKILL.md` tells a coding agent what the registry is and when
 registering a repo is the right move, so "add this to terrier" lands without
-you spelling out the command.
+you spelling out the command. Install with [skills.sh](https://github.com/vercel-labs/skills):
+
+```sh
+bunx skills add https://github.com/dittofleet/terrier
+```
 
 ## License
 

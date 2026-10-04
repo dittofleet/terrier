@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/sylophi/terrier/internal/git"
-	"github.com/sylophi/terrier/internal/store"
+	"github.com/dittofleet/terrier/internal/git"
+	"github.com/dittofleet/terrier/internal/store"
 )
 
 const addUsage = "usage: terrier add [<path>]"

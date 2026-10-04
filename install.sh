@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-REPO="sylophi/terrier"
+REPO="dittofleet/terrier"
 DEST="${TERRIER_INSTALL_DIR:-$HOME/.local/bin}"
 
 OS=$(uname -s | tr '[:upper:]' '[:lower:]')

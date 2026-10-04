@@ -22,7 +22,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/sylophi/terrier/internal/xdg"
+	"github.com/dittofleet/terrier/internal/xdg"
 )
 
 // SchemaVersion is what this build writes. A newer file is refused:

@@ -8,7 +8,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/sylophi/terrier/internal/xdg"
+	"github.com/dittofleet/terrier/internal/xdg"
 )
 
 const (

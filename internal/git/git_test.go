@@ -8,17 +8,17 @@ import (
 
 func TestSlug(t *testing.T) {
 	cases := map[string]string{
-		"git@github.com:dittofleet/whatagain.git":   "dittofleet/whatagain",
-		"https://github.com/sylophi/terrier.git":    "sylophi/terrier",
-		"https://github.com/sylophi/terrier":        "sylophi/terrier",
-		"ssh://git@github.com/sylophi/terrier.git":  "sylophi/terrier",
-		"git://github.com/sylophi/terrier.git":      "sylophi/terrier",
-		"https://GitHub.com/sylophi/terrier.git":    "sylophi/terrier",
-		"https://github.com/sylophi/terrier/":       "sylophi/terrier",
-		"git@gitlab.com:sylophi/terrier.git":        "",
-		"https://notgithub.com/sylophi/terrier.git": "",
-		"https://github.com/sylophi":                "",
-		"https://github.com/sylophi/terrier/extra":  "",
+		"git@github.com:dittofleet/whatagain.git":      "dittofleet/whatagain",
+		"https://github.com/dittofleet/terrier.git":    "dittofleet/terrier",
+		"https://github.com/dittofleet/terrier":        "dittofleet/terrier",
+		"ssh://git@github.com/dittofleet/terrier.git":  "dittofleet/terrier",
+		"git://github.com/dittofleet/terrier.git":      "dittofleet/terrier",
+		"https://GitHub.com/dittofleet/terrier.git":    "dittofleet/terrier",
+		"https://github.com/dittofleet/terrier/":       "dittofleet/terrier",
+		"git@gitlab.com:dittofleet/terrier.git":        "",
+		"https://notgithub.com/dittofleet/terrier.git": "",
+		"https://github.com/dittofleet":                "",
+		"https://github.com/dittofleet/terrier/extra":  "",
 		"":           "",
 		"github.com": "",
 	}
@@ -35,12 +35,12 @@ func TestParseOriginURL(t *testing.T) {
 [remote "upstream"]
 	url = git@github.com:someone/else.git
 [remote "origin"]
-	url = git@github.com:sylophi/terrier.git
+	url = git@github.com:dittofleet/terrier.git
 	fetch = +refs/heads/*:refs/remotes/origin/*
 [branch "main"]
 	remote = origin
 `
-	if got := parseOriginURL(config); got != "git@github.com:sylophi/terrier.git" {
+	if got := parseOriginURL(config); got != "git@github.com:dittofleet/terrier.git" {
 		t.Errorf("got %q", got)
 	}
 }

@@ -8,7 +8,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/sylophi/terrier/internal/release"
+	"github.com/dittofleet/terrier/internal/release"
 )
 
 const (

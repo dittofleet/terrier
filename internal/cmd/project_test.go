@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/sylophi/terrier/internal/store"
+	"github.com/dittofleet/terrier/internal/store"
 )
 
 func TestResolveRefByName(t *testing.T) {

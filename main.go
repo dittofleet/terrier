@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/sylophi/terrier/internal/cmd"
+	"github.com/dittofleet/terrier/internal/cmd"
 )
 
 var errUnknownCommand = errors.New("unknown command")

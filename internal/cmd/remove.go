@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"slices"
 
-	"github.com/sylophi/terrier/internal/store"
+	"github.com/dittofleet/terrier/internal/store"
 )
 
 const removeUsage = "usage: terrier rm <project>..."

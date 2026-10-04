@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/sylophi/terrier/internal/xdg"
+	"github.com/dittofleet/terrier/internal/xdg"
 )
 
 // writeJSON prints v as indented JSON, which is what every --json flag
