@@ -1,3 +1,5 @@
+<img src="assets/icon.svg" width="80" alt="terrier icon">
+
 # terrier
 
 One place to register your repos, so every tool already knows them.
