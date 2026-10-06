@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/dittofleet/terrier/internal/xdg"
+	"github.com/dittofleet/go-cli-kit/xdg"
 )
 
 // writeJSON prints v as indented JSON, which is what every --json flag

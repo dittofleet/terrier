@@ -22,7 +22,8 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/dittofleet/terrier/internal/xdg"
+	"github.com/dittofleet/go-cli-kit/xdg"
+	"github.com/dittofleet/terrier/internal/app"
 )
 
 // SchemaVersion is what this build writes. A newer file is refused:
@@ -41,7 +42,7 @@ type Store struct {
 
 // Path returns the location of the registry file.
 func Path() string {
-	return filepath.Join(xdg.ConfigDir(xdg.App), "projects.json")
+	return filepath.Join(xdg.ConfigDir(app.Name), "projects.json")
 }
 
 // Load reads the registry. A missing file is not an error: it yields an
