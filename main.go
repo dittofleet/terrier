@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"os"
 
+	clikit "github.com/dittofleet/go-cli-kit"
+	"github.com/dittofleet/go-cli-kit/selfupdate"
+	"github.com/dittofleet/terrier/internal/app"
 	"github.com/dittofleet/terrier/internal/cmd"
 )
 
@@ -59,7 +62,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	if err := dispatch(args); err != nil {
+	if err := dispatch(app.New(version), args); err != nil {
 		if errors.Is(err, errUnknownCommand) {
 			// Naming it catches the common slip of putting a flag before
 			// the command, where a bare usage dump explains nothing.
@@ -72,7 +75,7 @@ func main() {
 	}
 }
 
-func dispatch(args []string) error {
+func dispatch(terrier clikit.App, args []string) error {
 	switch args[0] {
 	case "add":
 		return cmd.Add(args[1:])
@@ -85,9 +88,10 @@ func dispatch(args []string) error {
 	case "prune":
 		return cmd.Prune(args[1:])
 	case "update":
-		return cmd.SelfUpdate(version)
+		_, err := selfupdate.Run(terrier)
+		return err
 	case "uninstall":
-		return cmd.Uninstall(args[1:], version)
+		return cmd.Uninstall(args[1:], terrier)
 	case "version", "--version", "-v":
 		fmt.Println(version)
 		return nil

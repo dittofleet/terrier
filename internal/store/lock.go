@@ -8,7 +8,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/dittofleet/terrier/internal/xdg"
+	"github.com/dittofleet/go-cli-kit/xdg"
+	"github.com/dittofleet/terrier/internal/app"
 )
 
 const (
@@ -20,7 +21,7 @@ const (
 // saving replaces the registry through a rename and would strand a lock
 // held on the old inode.
 func lockPath() string {
-	return filepath.Join(xdg.ConfigDir(xdg.App), ".projects.lock")
+	return filepath.Join(xdg.ConfigDir(app.Name), ".projects.lock")
 }
 
 // acquire takes an exclusive advisory lock, waiting a short while for

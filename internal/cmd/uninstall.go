@@ -8,9 +8,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/dittofleet/terrier/internal/release"
+	clikit "github.com/dittofleet/go-cli-kit"
+	"github.com/dittofleet/go-cli-kit/xdg"
+	"github.com/dittofleet/terrier/internal/app"
 	"github.com/dittofleet/terrier/internal/store"
-	"github.com/dittofleet/terrier/internal/xdg"
 )
 
 const uninstallUsage = "usage: terrier uninstall [--yes]"
@@ -18,7 +19,7 @@ const uninstallUsage = "usage: terrier uninstall [--yes]"
 // Uninstall removes the terrier binary, its `ter` alias, and the config
 // directory. Order is config, then alias, then binary, so a failure leaves
 // a tool to retry with.
-func Uninstall(args []string, version string) error {
+func Uninstall(args []string, a clikit.App) error {
 	var yes bool
 	rest, err := yesFlag(&yes).parse(args, uninstallUsage)
 	if err != nil {
@@ -28,17 +29,17 @@ func Uninstall(args []string, version string) error {
 		return fmt.Errorf("unexpected argument: %s\n%s", rest[0], uninstallUsage)
 	}
 
-	if version == "dev" {
+	if a.IsDev() {
 		return errors.New("cannot uninstall a dev build")
 	}
 
-	binaryPath, err := resolveExecutable()
+	binaryPath, err := clikit.Executable()
 	if err != nil {
 		return fmt.Errorf("cannot determine binary path: %w", err)
 	}
 	alias := aliasPath(binaryPath)
 
-	configDir := xdg.ConfigDir(xdg.App)
+	configDir := xdg.ConfigDir(app.Name)
 
 	fmt.Println("This will remove:")
 	fmt.Printf("  - Binary:  %s\n", binaryPath)
@@ -94,7 +95,7 @@ func Uninstall(args []string, version string) error {
 // when there is none there to remove. Anything at that name which is not
 // a symlink to this binary belongs to something else and is left alone.
 func aliasPath(binaryPath string) string {
-	candidate := filepath.Join(filepath.Dir(binaryPath), release.Alias)
+	candidate := filepath.Join(filepath.Dir(binaryPath), app.Alias)
 	resolved, err := filepath.EvalSymlinks(candidate)
 	if err != nil || resolved != binaryPath {
 		return ""
