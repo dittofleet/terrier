@@ -24,7 +24,7 @@ Commands:
   path [<project>]      Print where a project lives, defaulting to this one
   prune                 Unregister projects whose directory is gone
   update                Download and install the latest version
-  uninstall [--yes]     Remove the binary, config, and cache
+  uninstall [--yes]     Remove the binary, ter alias, and registry
   version               Print the installed version
   help                  Print this help message
 

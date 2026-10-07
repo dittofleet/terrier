@@ -112,7 +112,7 @@ terrier ls                    List registered projects
 terrier path [<project>]      Print where a project lives, defaulting to this one
 terrier prune                 Unregister projects whose directory is gone
 terrier update                Download and install the latest version
-terrier uninstall [--yes]     Remove the binary, config, and cache
+terrier uninstall [--yes]     Remove the binary, ter alias, and registry
 ```
 
 Run `terrier help` for the flags.
