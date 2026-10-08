@@ -92,6 +92,8 @@ func dispatch(terrier clikit.App, args []string) error {
 		return err
 	case "uninstall":
 		return cmd.Uninstall(args[1:], terrier)
+	case "postinstall":
+		return cmd.Postinstall(terrier)
 	case "version", "--version", "-v":
 		fmt.Println(version)
 		return nil
