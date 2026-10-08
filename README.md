@@ -81,7 +81,7 @@ runtime, so this is one line, and it is safe to run when terrier is already
 there:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/dittofleet/terrier/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/dittofleet/.github/main/install.sh | sh -s terrier
 ```
 
 **Update it when you update.** Run the same line from your tool's update path.
@@ -120,7 +120,7 @@ Run `terrier help` for the flags.
 ## Install
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/dittofleet/terrier/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/dittofleet/.github/main/install.sh | sh -s terrier
 ```
 
 Installs the latest release to `~/.local/bin/terrier`, with `ter` alongside it
