@@ -43,8 +43,8 @@ func expandTilde(path string) string {
 	if path == "~" {
 		return xdg.Home()
 	}
-	if rest, found := strings.CutPrefix(path, "~"+string(filepath.Separator)); found {
-		return filepath.Join(xdg.Home(), rest)
+	if len(path) > 1 && path[0] == '~' && os.IsPathSeparator(path[1]) {
+		return filepath.Join(xdg.Home(), path[2:])
 	}
 	return path
 }

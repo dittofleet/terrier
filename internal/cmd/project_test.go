@@ -1,19 +1,30 @@
 package cmd
 
 import (
+	"path/filepath"
 	"strings"
 	"testing"
 
 	"github.com/dittofleet/terrier/internal/store"
 )
 
+// registry builds a store from slash-separated paths, spelled the way this
+// OS spells them.
+func registry(paths ...string) *store.Store {
+	s := &store.Store{}
+	for _, p := range paths {
+		s.Projects = append(s.Projects, filepath.FromSlash(p))
+	}
+	return s
+}
+
 func TestResolveRefByName(t *testing.T) {
-	s := &store.Store{Projects: []string{"/s/dittofleet/whatagain", "/s/cli/terrier"}}
+	s := registry("/s/dittofleet/whatagain", "/s/cli/terrier")
 	got, err := resolveRef(s, "whatagain")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if got != "/s/dittofleet/whatagain" {
+	if got != filepath.FromSlash("/s/dittofleet/whatagain") {
 		t.Errorf("got %q", got)
 	}
 }
@@ -26,39 +37,39 @@ func TestResolveRefNeedsAWholeSegment(t *testing.T) {
 }
 
 func TestResolveRefDisambiguatesByPath(t *testing.T) {
-	s := &store.Store{Projects: []string{"/s/alpha/api", "/s/beta/api"}}
+	s := registry("/s/alpha/api", "/s/beta/api")
 	if _, err := resolveRef(s, "api"); err == nil {
 		t.Fatal("an ambiguous ref resolved")
-	} else if !strings.Contains(err.Error(), "alpha/api") || !strings.Contains(err.Error(), "beta/api") {
+	} else if !strings.Contains(err.Error(), filepath.FromSlash("alpha/api")) || !strings.Contains(err.Error(), filepath.FromSlash("beta/api")) {
 		t.Errorf("the error does not name the candidates: %v", err)
 	}
 	got, err := resolveRef(s, "beta/api")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if got != "/s/beta/api" {
+	if got != filepath.FromSlash("/s/beta/api") {
 		t.Errorf("got %q", got)
 	}
 }
 
 func TestResolveRefFallsBackToCaseInsensitive(t *testing.T) {
-	s := &store.Store{Projects: []string{"/s/cli/PReviewer"}}
+	s := registry("/s/cli/PReviewer")
 	got, err := resolveRef(s, "previewer")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if got != "/s/cli/PReviewer" {
+	if got != filepath.FromSlash("/s/cli/PReviewer") {
 		t.Errorf("got %q", got)
 	}
 }
 
 func TestResolveRefPrefersAnExactCaseMatch(t *testing.T) {
-	s := &store.Store{Projects: []string{"/s/one/api", "/s/two/API"}}
+	s := registry("/s/one/api", "/s/two/API")
 	got, err := resolveRef(s, "api")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if got != "/s/one/api" {
+	if got != filepath.FromSlash("/s/one/api") {
 		t.Errorf("got %q, want the exactly-cased match", got)
 	}
 }
@@ -82,6 +93,23 @@ func TestLooksLikePath(t *testing.T) {
 	for ref, want := range cases {
 		if got := looksLikePath(ref); got != want {
 			t.Errorf("looksLikePath(%q) = %v, want %v", ref, got, want)
+		}
+	}
+}
+
+func TestExpandTilde(t *testing.T) {
+	home := t.TempDir()
+	t.Setenv("HOME", home)
+	t.Setenv("USERPROFILE", home)
+	cases := map[string]string{
+		"~":       home,
+		"~/repos": filepath.Join(home, "repos"),
+		"~user":   "~user",
+		"repos":   "repos",
+	}
+	for path, want := range cases {
+		if got := expandTilde(path); got != want {
+			t.Errorf("expandTilde(%q) = %q, want %q", path, got, want)
 		}
 	}
 }

@@ -83,7 +83,7 @@ func currentPath(s *store.Store) (string, error) {
 // settles it when two repos share a name. Nothing is stored to make this
 // work, so there are no aliases to go stale.
 func resolveRef(s *store.Store, ref string) (string, error) {
-	ref = strings.TrimRight(strings.TrimSpace(ref), string(filepath.Separator))
+	ref = strings.TrimSpace(ref)
 	if ref == "" {
 		return "", fmt.Errorf("empty project reference")
 	}
@@ -122,7 +122,8 @@ func resolveRef(s *store.Store, ref string) (string, error) {
 
 // looksLikePath distinguishes a path the user typed from a bare name.
 func looksLikePath(ref string) bool {
-	return strings.HasPrefix(ref, "/") ||
+	return os.IsPathSeparator(ref[0]) ||
+		filepath.VolumeName(ref) != "" ||
 		strings.HasPrefix(ref, "~") ||
 		strings.HasPrefix(ref, ".")
 }

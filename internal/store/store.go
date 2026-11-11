@@ -51,7 +51,7 @@ func Path() string {
 // to lose.
 func Load() (*Store, error) {
 	path := Path()
-	data, err := os.ReadFile(path)
+	data, err := readFile(path)
 	if errors.Is(err, fs.ErrNotExist) {
 		return &Store{SchemaVersion: SchemaVersion}, nil
 	}
@@ -116,7 +116,7 @@ func (s *Store) Save() error {
 		_ = os.Remove(tmpPath)
 		return err
 	}
-	if err := os.Rename(tmpPath, path); err != nil {
+	if err := replace(tmpPath, path); err != nil {
 		_ = os.Remove(tmpPath)
 		return err
 	}
@@ -182,7 +182,8 @@ func under(dir, root string) bool {
 	if dir == root {
 		return true
 	}
-	if root == string(filepath.Separator) {
+	// Only a filesystem root (/ or C:\) keeps a trailing separator.
+	if os.IsPathSeparator(root[len(root)-1]) {
 		return strings.HasPrefix(dir, root)
 	}
 	return len(dir) > len(root) && dir[len(root)] == filepath.Separator && dir[:len(root)] == root

@@ -29,7 +29,7 @@ $ terrier path whatagain
 $ cd $(terrier path port-pool)
 ```
 
-`ter` is installed as a shorter name for the same tool.
+`ter` is installed as a shorter name for the same tool, except on Windows.
 
 Terrier records the path of a repo and nothing else. A name, an origin URL, or
 a default branch kept alongside it would be a copy of something git already
@@ -123,9 +123,16 @@ Run `terrier help` for the flags.
 curl -fsSL https://raw.githubusercontent.com/dittofleet/.github/main/install.sh | sh -s terrier
 ```
 
+On Windows, in PowerShell:
+
+```powershell
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/dittofleet/.github/main/install.ps1))) terrier
+```
+
 Installs the latest release to `~/.local/bin/terrier`, with `ter` alongside it
-(override with `TERRIER_INSTALL_DIR`). Supported platforms: macOS (arm64, x64),
-Linux (arm64, x64).
+(override with `TERRIER_INSTALL_DIR`). On Windows, `~` is your user profile
+folder and there is no `ter`. Supported platforms: macOS (arm64, x64), Linux (arm64, x64), Windows
+(x64).
 
 `terrier update` upgrades in place when you want a newer one. Nothing checks
 for updates on its own, and terrier reaches the network only when you run that
