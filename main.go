@@ -47,7 +47,7 @@ disagree with the repository. Other tools read the registry by running
 ` + "`terrier path`" + `, which prints one path and exits non-zero when the
 current directory is not a registered project.
 
-` + "`ter`" + ` is installed as a shorter name for the same tool.
+` + "`ter`" + ` is installed as a shorter name for the same tool, except on Windows.
 `
 
 func printUsage() {

@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"path/filepath"
 
 	clikit "github.com/dittofleet/go-cli-kit"
 	"github.com/dittofleet/go-cli-kit/uninstall"
@@ -40,17 +39,6 @@ func Uninstall(args []string, a clikit.App) error {
 		Notice: "Only the registry is deleted. No repository is touched, and tools that read\n" +
 			"terrier keep whatever they stored themselves.",
 	})
-}
-
-// aliasPath returns the `ter` alias installed beside the binary, or ""
-// when there is none there to remove. Anything at that name which is not
-// this binary's alias belongs to something else and is left alone.
-func aliasPath(binaryPath string) string {
-	candidate := filepath.Join(filepath.Dir(binaryPath), aliasFile)
-	if !isAlias(candidate, binaryPath) {
-		return ""
-	}
-	return candidate
 }
 
 // describeRegistry summarizes what is about to be deleted. An unreadable
