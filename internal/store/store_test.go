@@ -1,6 +1,7 @@
 package store
 
 import (
+	"path/filepath"
 	"slices"
 	"testing"
 )
@@ -43,11 +44,12 @@ func TestRemove(t *testing.T) {
 
 func TestContainingPrefersTheLongestMatch(t *testing.T) {
 	// A repo nested inside another registered one resolves to itself.
-	s := &Store{Projects: []string{"/repos/outer", "/repos/outer/vendor/inner"}}
-	if got := s.Containing("/repos/outer/vendor/inner/src"); got != "/repos/outer/vendor/inner" {
+	outer, inner := filepath.FromSlash("/repos/outer"), filepath.FromSlash("/repos/outer/vendor/inner")
+	s := &Store{Projects: []string{outer, inner}}
+	if got := s.Containing(filepath.Join(inner, "src")); got != inner {
 		t.Errorf("got %q", got)
 	}
-	if got := s.Containing("/repos/outer/src"); got != "/repos/outer" {
+	if got := s.Containing(filepath.Join(outer, "src")); got != outer {
 		t.Errorf("got %q", got)
 	}
 }

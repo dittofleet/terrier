@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"syscall"
 	"time"
 
 	"github.com/dittofleet/go-cli-kit/xdg"
@@ -24,7 +23,7 @@ func lockPath() string {
 	return filepath.Join(xdg.ConfigDir(app.Name), ".projects.lock")
 }
 
-// acquire takes an exclusive advisory lock, waiting a short while for
+// acquire takes an exclusive lock, waiting a short while for
 // whoever holds it. Polling rather than blocking outright means a stuck
 // process cannot hang the CLI indefinitely.
 func acquire() (release func(), err error) {
@@ -39,14 +38,11 @@ func acquire() (release func(), err error) {
 
 	deadline := time.Now().Add(lockTimeout)
 	for {
-		err := syscall.Flock(int(f.Fd()), syscall.LOCK_EX|syscall.LOCK_NB)
+		err := tryLock(f)
 		if err == nil {
-			return func() {
-				_ = syscall.Flock(int(f.Fd()), syscall.LOCK_UN)
-				_ = f.Close()
-			}, nil
+			return func() { _ = f.Close() }, nil
 		}
-		if !errors.Is(err, syscall.EWOULDBLOCK) {
+		if !errors.Is(err, errLocked) {
 			f.Close()
 			return nil, fmt.Errorf("lock %s: %w", path, err)
 		}

@@ -42,13 +42,12 @@ func Uninstall(args []string, a clikit.App) error {
 	})
 }
 
-// aliasPath returns the `ter` symlink installed beside the binary, or ""
+// aliasPath returns the `ter` alias installed beside the binary, or ""
 // when there is none there to remove. Anything at that name which is not
-// a symlink to this binary belongs to something else and is left alone.
+// this binary's alias belongs to something else and is left alone.
 func aliasPath(binaryPath string) string {
-	candidate := filepath.Join(filepath.Dir(binaryPath), app.Alias)
-	resolved, err := filepath.EvalSymlinks(candidate)
-	if err != nil || resolved != binaryPath {
+	candidate := filepath.Join(filepath.Dir(binaryPath), aliasFile)
+	if !isAlias(candidate, binaryPath) {
 		return ""
 	}
 	return candidate

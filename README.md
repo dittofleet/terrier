@@ -123,9 +123,16 @@ Run `terrier help` for the flags.
 curl -fsSL https://raw.githubusercontent.com/dittofleet/.github/main/install.sh | sh -s terrier
 ```
 
+On Windows, in PowerShell:
+
+```powershell
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/dittofleet/.github/main/install.ps1))) terrier
+```
+
 Installs the latest release to `~/.local/bin/terrier`, with `ter` alongside it
-(override with `TERRIER_INSTALL_DIR`). Supported platforms: macOS (arm64, x64),
-Linux (arm64, x64).
+(override with `TERRIER_INSTALL_DIR`). On Windows, `~` is your user profile
+folder. Supported platforms: macOS (arm64, x64), Linux (arm64, x64), Windows
+(x64).
 
 `terrier update` upgrades in place when you want a newer one. Nothing checks
 for updates on its own, and terrier reaches the network only when you run that
